@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * ABS Analyzer — dark institutional theme.
+ * Palette is derived from §5.2 design tokens (teal accent #36BFB1),
+ * expressed here as raw HSL triplets so Tailwind/shadcn opacity modifiers
+ * work. The page is locked to a single dark theme (Pre-Flight: Page Theme Lock).
+ */
+@layer base {
+  :root {
+    --background: 225 21% 7%; /* #0F1117 */
+    --foreground: 228 28% 93%; /* #E8EAF2 */
+
+    --card: 226 20% 13%; /* #1A1D27 */
+    --card-foreground: 228 28% 93%;
+
+    --popover: 226 20% 13%;
+    --popover-foreground: 228 28% 93%;
+
+    --primary: 174 56% 48%; /* #36BFB1 teal accent */
+    --primary-foreground: 225 30% 8%;
+
+    --secondary: 230 26% 18%; /* #22263A */
+    --secondary-foreground: 228 28% 93%;
+
+    --muted: 230 26% 18%;
+    --muted-foreground: 229 16% 62%; /* #7B82A0, lifted for AA contrast */
+
+    --accent: 230 26% 18%;
+    --accent-foreground: 228 28% 93%;
+
+    --destructive: 354 70% 60%; /* #E05260 */
+    --destructive-foreground: 228 28% 96%;
+
+    --warning: 38 79% 56%; /* #E8A838 */
+    --warning-foreground: 225 30% 8%;
+
+    --info: 220 82% 65%; /* #5B8DEF */
+    --info-foreground: 225 30% 8%;
+
+    --success: 174 56% 48%; /* same as accent */
+    --success-foreground: 225 30% 8%;
+
+    --border: 231 22% 23%; /* #2E3248 */
+    --input: 231 22% 23%;
+    --ring: 174 56% 48%;
+
+    --radius: 0.5rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* Honor reduced-motion for the few transitions/animations used (Pre-Flight). */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

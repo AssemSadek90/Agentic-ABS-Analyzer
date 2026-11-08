@@ -1,0 +1,19 @@
+// The 12-row demo pool from ARCHITECTURE.md §8 (10 valid + 2 invalid rows).
+// Used by the "Download sample CSV" button so the analysis and the validation
+// pipeline can both be exercised immediately.
+export const SAMPLE_FILENAME = "sample_pool.csv"
+
+export const SAMPLE_CSV = `asset_id,asset_type,origination_date,maturity_date,outstanding_balance,original_balance,interest_rate,borrower_country,credit_score,collateral_value,days_past_due,loan_to_value
+A001,bike,2022-03-15,2025-03-15,2400.00,3600.00,4.50,DE,720,3200.00,0,75.00
+A002,bike,2021-11-01,2024-11-01,800.00,2400.00,4.25,DE,680,2100.00,0,38.10
+A003,solar_panel,2023-01-20,2031-01-20,48000.00,52000.00,5.10,FR,,54000.00,0,88.89
+A004,vehicle,2022-07-01,2026-07-01,18500.00,24000.00,6.20,NL,590,19000.00,35,97.37
+A005,bike,2023-04-01,2026-04-01,1950.00,2600.00,4.75,DE,755,2400.00,0,81.25
+A006,solar_panel,2022-09-15,2030-09-15,62000.00,70000.00,5.30,DE,,72000.00,0,86.11
+A007,bike,2021-06-01,2024-06-01,200.00,1800.00,4.00,FR,800,1600.00,0,12.50
+A008,vehicle,2023-02-28,2027-02-28,22000.00,26000.00,6.80,DE,610,21000.00,0,104.76
+A009,bike,2022-12-01,2025-12-01,1600.00,2200.00,4.50,DE,690,2000.00,0,80.00
+A010,equipment,2023-06-01,2028-06-01,35000.00,40000.00,5.90,NL,640,38000.00,92,92.11
+A001,bike,2023-01-01,2026-01-01,1000.00,1500.00,4.30,DE,700,1400.00,0,66.67
+A012,vehicle,2026-01-01,2024-01-01,30000.00,abc,7.10,DEU,500,28000.00,-5,150.00
+`

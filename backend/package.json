@@ -1,0 +1,40 @@
+{
+  "name": "abs-analyzer-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ABS Report Analyzer — backend API (Express + TypeScript)",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "core:sample": "tsx scripts/run-core.ts",
+    "db:migrate": "tsx scripts/migrate.ts",
+    "catalog:preview": "tsx --env-file=../.env scripts/catalog-preview.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.40.1",
+    "@google/genai": "^1.0.0",
+    "argon2": "^0.41.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "effect": "^3.10.0",
+    "exceljs": "^4.4.0",
+    "express": "^4.19.2",
+    "multer": "^1.4.5-lts.1",
+    "openai": "^5.0.0",
+    "papaparse": "^5.4.1",
+    "pdfkit": "^0.15.0",
+    "postgres": "^3.4.4"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.7",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/multer": "^1.4.11",
+    "@types/node": "^20.14.0",
+    "@types/papaparse": "^5.3.14",
+    "@types/pdfkit": "^0.13.4",
+    "dotenv": "^16.4.5",
+    "tsx": "^4.16.0",
+    "typescript": "^5.5.0"
+  }
+}

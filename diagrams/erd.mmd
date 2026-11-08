@@ -1,0 +1,94 @@
+erDiagram
+  USERS ||--o{ SESSIONS : "has"
+  USERS ||--o{ PROVIDER_KEYS : "owns"
+  USERS ||--o{ ANALYSIS_RUNS : "owns"
+  USERS ||--o{ CHAT_CONVERSATIONS : "owns"
+  ANALYSIS_RUNS ||--o{ VALIDATION_ERRORS : "contains"
+  ANALYSIS_RUNS ||--o| ANALYSIS_RESULTS : "produces"
+  ANALYSIS_RUNS ||--o{ RULE_RESULTS : "checked by"
+  CHAT_CONVERSATIONS ||--o{ CHAT_MESSAGES : "contains"
+  ANALYSIS_RUNS |o--o{ CHAT_CONVERSATIONS : "attached as context"
+  ANALYSIS_RUNS |o--o{ CHAT_MESSAGES : "context switch"
+
+  USERS {
+    uuid id PK
+    text email UK
+    text password_hash "argon2id"
+    text display_name
+    timestamptz created_at
+  }
+  SESSIONS {
+    uuid id PK
+    uuid user_id FK
+    text token_hash UK "sha256 of cookie token"
+    timestamptz expires_at
+  }
+  PROVIDER_KEYS {
+    uuid id PK
+    uuid user_id FK
+    text provider "anthropic|openai|gemini"
+    text encrypted_key "AES-256-GCM iv:ct:tag"
+    text key_last4
+    timestamptz updated_at
+  }
+  ANALYSIS_RUNS {
+    uuid id PK
+    uuid user_id FK
+    text filename
+    int row_count
+    int valid_row_count
+    text status "success|partial|failed"
+    text raw_csv "full CSV for audit"
+    timestamptz created_at
+  }
+  VALIDATION_ERRORS {
+    uuid id PK
+    uuid run_id FK
+    int row_number
+    text asset_id
+    text field
+    text error_type
+    text message
+  }
+  ANALYSIS_RESULTS {
+    uuid id PK
+    uuid run_id FK "unique · 1 to 1"
+    text provider
+    text model
+    numeric total_pool_volume
+    numeric weighted_avg_rate
+    numeric delinquency_rate
+    numeric concentration_top5
+    numeric obligor_top1
+    jsonb asset_type_breakdown
+    jsonb country_breakdown
+    jsonb esma_flags "from LLM"
+    jsonb risk_signals "from LLM"
+    text executive_summary "from LLM"
+    jsonb raw_ai_response
+  }
+  RULE_RESULTS {
+    uuid id PK
+    uuid run_id FK
+    text rule_code
+    text severity "error|warning|info"
+    bool passed
+    numeric observed_value
+    numeric threshold_value
+    text message
+  }
+  CHAT_CONVERSATIONS {
+    uuid id PK
+    uuid user_id FK
+    text title
+    uuid attached_run_id FK "nullable"
+    timestamptz updated_at
+  }
+  CHAT_MESSAGES {
+    uuid id PK
+    uuid conversation_id FK
+    text role "user|assistant"
+    text content
+    uuid attached_run_id FK "nullable"
+    timestamptz created_at
+  }

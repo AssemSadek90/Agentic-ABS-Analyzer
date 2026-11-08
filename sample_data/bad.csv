@@ -1,0 +1,2 @@
+asset_id,asset_type,origination_date,maturity_date,outstanding_balance,original_balance,interest_rate,borrower_country
+X1,bike,not-a-date,2020-01-01,abc,1000,4.5,DE

@@ -1,0 +1,53 @@
+flowchart TB
+  subgraph BROWSER["User Browser"]
+    UI["Next.js UI"]
+    CLIENT["Client Components<br/>analyze · chat · settings"]
+  end
+
+  subgraph FE["Frontend container · Next.js 14 · port 3000"]
+    RSC["Server Components<br/>history · run detail"]
+    APILIB["lib/api.ts<br/>base URL chosen by context"]
+  end
+
+  subgraph BE["Backend container · Express · port 3001"]
+    AUTH["requireAuth<br/>httpOnly cookie session"]
+    ROUTES["Routers<br/>analyze · history · chat<br/>keys · models · export · auth"]
+    subgraph CORE["Deterministic core — pure TypeScript"]
+      direction LR
+      PARSE["parse<br/>papaparse"] --> VALIDATE["validate<br/>Effect-TS"] --> METRICS["computeMetrics"] --> RULES["evaluateRules<br/>ESMA checks"]
+    end
+    subgraph AILAYER["Qualitative AI layer"]
+      SELECT["resolveSelection<br/>AES-256-GCM key vault"]
+      PROVIDER["QualitativeProvider<br/>one interface"]
+    end
+    QUERIES["db/queries.ts<br/>persist in one transaction"]
+  end
+
+  PG[("PostgreSQL<br/>9 tables")]
+
+  subgraph LLM["LLM providers · bring your own key"]
+    ANT["Anthropic"]
+    OAI["OpenAI"]
+    GEM["Gemini"]
+  end
+
+  UI --> RSC
+  CLIENT -->|"fetch · localhost:3001 · cookie"| APILIB
+  RSC -->|"server fetch · backend:3001 · cookie forwarded"| APILIB
+  APILIB --> AUTH
+  AUTH --> ROUTES
+  ROUTES --> CORE
+  RULES --> SELECT
+  SELECT --> PROVIDER
+  PROVIDER --> ANT
+  PROVIDER --> OAI
+  PROVIDER --> GEM
+  ROUTES --> QUERIES
+  QUERIES -->|"SQL · postgres.js"| PG
+
+  classDef det fill:#e6f4f1,stroke:#1E6B65,color:#12403c
+  classDef ai fill:#eef3fb,stroke:#3B6FD4,color:#1f3a66
+  classDef store fill:#f4efe6,stroke:#B8860B,color:#5c4405
+  class PARSE,VALIDATE,METRICS,RULES det
+  class SELECT,PROVIDER ai
+  class PG store

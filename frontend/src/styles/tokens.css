@@ -1,0 +1,44 @@
+:root {
+  /* Color palette */
+  --color-bg:           #0F1117;   /* near-black background */
+  --color-surface:      #1A1D27;   /* card/panel surface */
+  --color-surface-alt:  #22263A;   /* secondary surface, table rows */
+  --color-border:       #2E3248;   /* subtle borders */
+  --color-accent:       #36BFB1;   /* teal accent */
+  --color-accent-dim:   #1E6B65;   /* dimmed accent for backgrounds */
+  --color-text-primary: #E8EAF2;   /* primary text */
+  --color-text-muted:   #7B82A0;   /* muted/secondary text */
+
+  /* Semantic colors */
+  --color-error:        #E05260;
+  --color-warning:      #E8A838;
+  --color-success:      #36BFB1;   /* same as accent */
+  --color-info:         #5B8DEF;
+
+  /* Typography */
+  --font-display:  "Inter", system-ui, sans-serif;
+  --font-mono:     "JetBrains Mono", "Fira Code", monospace;
+
+  /* Type scale */
+  --text-xs:   0.75rem;
+  --text-sm:   0.875rem;
+  --text-base: 1rem;
+  --text-lg:   1.125rem;
+  --text-xl:   1.25rem;
+  --text-2xl:  1.5rem;
+  --text-3xl:  2rem;
+
+  /* Spacing */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-12: 48px;
+
+  /* Borders */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+}

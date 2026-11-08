@@ -1,0 +1,56 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: abs
+      POSTGRES_PASSWORD: abs_dev
+      POSTGRES_DB: abs_analyzer
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      # Whole migrations dir: initdb runs the files alphabetically on FIRST start
+      # of a fresh volume only (schema changes need `docker compose down -v`).
+      - ./backend/src/db/migrations:/docker-entrypoint-initdb.d:ro
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      DATABASE_URL: postgres://abs:abs_dev@postgres:5432/abs_analyzer
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
+      PORT: 3001
+      FRONTEND_ORIGIN: ${FRONTEND_ORIGIN:-http://localhost:3000}
+      APP_ENCRYPTION_KEY: ${APP_ENCRYPTION_KEY}
+      SESSION_TTL_DAYS: ${SESSION_TTL_DAYS:-7}
+      # Optional model-catalog inputs (README "LLM model catalog")
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      DEFAULT_MODEL: ${DEFAULT_MODEL:-}
+    depends_on:
+      - postgres
+    volumes:
+      - ./backend/src:/app/src  # hot reload in dev
+
+  frontend:                      # Next.js 14
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      # Browser-facing URL (inlined into the client bundle at build time):
+      NEXT_PUBLIC_API_URL: http://localhost:3001
+      # Server-side URL for React Server Component fetches (resolved over the
+      # Docker network via the compose service name):
+      API_URL: http://backend:3001
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
